@@ -55,11 +55,8 @@ distanceCalculator([H|T],[Head|Tail],FinalDistanceList):-
     append([SquareRoot],NewFinalList,FinalDistanceList).
 
 % extract list of players from flatten2D
-compare(X, Y) :-
-    X == Y.
-
 filterList(A, In, Out) :-
-    exclude(compare(A), In, Out).
+    exclude(=(A), In, Out).
 
 % flatten the 2d maze
 flatten2D([],[]).

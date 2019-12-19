@@ -1,10 +1,15 @@
 %  change2d and fnd2D to player 1 and g coordinates && change2D to replace 1 with next coordinate and replace 1 with -+
-fewestSlides(Maze,[u,u]):-
+fewestSlides(Maze,MovesList):-
     find2D(Maze,'g',(Xg,Yg)),
     find2D(Maze,1,(Xone,Yone)),
     change2D(Maze,1,(Xg,Yg),MazeWithNoG),
     change2D(MazeWithNoG,'-',(Xone,Yone),FinalMaze),
-    print(FinalMaze).
+    between(0,10,NewLength),
+    length(MovesList,NewLength),
+    bfs(Maze,FinalMaze,MovesList), !.
+
+
+    % print(MovesList).
 
 moveLeft(Maze,'l','x',Maze).
 moveLeft(Maze,'l',2,Maze).
@@ -103,13 +108,27 @@ moveDown(Maze,'d','g',GMaze):-
     change2D(Maze,1,(Xd,Y),NewMaze),
     change2D(NewMaze,'-',(X,Y),GMaze).
 
+% edges
+edge(Maze,NextMaze,'l'):-
+    moveLeft(Maze,'l',111,NextMaze),
+    Maze \= NextMaze.
+edge(Maze,NextMaze,'r'):-
+    moveRight(Maze,'r',111,NextMaze),
+    Maze \= NextMaze.
+edge(Maze,NextMaze,'u'):-
+    moveUp(Maze,'u',111,NextMaze),
+    Maze \= NextMaze.
+edge(Maze,NextMaze,'d'):-
+    moveDown(Maze,'d',111,NextMaze),
+    Maze \= NextMaze.
+
 % BFS implementation
 % bfs(From,To,Path)
-bfs(From,From,[From]).
-bfs(From,To,[From|Rest]):-    
-    length(Rest,_),    
-    edge(From,Next),    
-    bfs(Next,To,Rest).
+bfs(Maze,Maze,[]).
+bfs(Maze,GoalMaze,[Head|Tail]):- 
+    length(Tail,ShortestLength),
+    edge(Maze,NextMazeNode,Head), 
+    bfs(NextMazeNode,GoalMaze,Tail).
 
 % set(Before,NewElement,Position,After)
 set([_|T],NewElement,1,[NewElement|T]).

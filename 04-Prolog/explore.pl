@@ -48,15 +48,24 @@
 %     append(PlayersList, T, ShrinkedList).
 
 % square the list values
-squareMaker([],[]).
-squareMaker([H|T],SquaredList):-
-    squareMaker(T,NewSquaredList),
-    NewValue is H^2,
-    append([NewValue],NewSquaredList,SquaredList).
+% squareMaker([],[]).
+% squareMaker([H|T],SquaredList):-
+%     squareMaker(T,NewSquaredList),
+%     NewValue is H^2,
+%     append([NewValue],NewSquaredList,SquaredList).
     
 
 
+mystery(0,1).
+mystery(A,B):− 
+    0 is mod(A,2), 
+    C is A/2, 
+    mystery(C,D),B is D∗∗2,!. 
 
+mystery(E,F) :− 
+    1 is mod(E,2), 
+    G is E−1, 
+    mystery(G,H),F is H∗2,!.
 
 
 
